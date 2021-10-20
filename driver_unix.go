@@ -76,17 +76,17 @@ func newContext(sampleRate, channelNum, bitDepthInBytes int) (*context, chan str
 		return nil, nil, err
 	}
 
-	go func() {
-		buf32 := make([]float32, int(periodSize)*c.channelNum)
-		for {
-			if err := c.readAndWrite(buf32); err != nil {
-				// TODO: Handle errors correctly.
-				panic(err)
-			}
-		}
-	}()
-
 	return c, ready, nil
+}
+
+func (c *context) Run() error {
+	periodSize := C.snd_pcm_uframes_t(1024)
+	buf32 := make([]float32, int(periodSize)*c.channelNum)
+	for {
+		if err := c.readAndWrite(buf32); err != nil {
+			return err
+		}
+	}
 }
 
 func (c *context) alsaPcmHwParams(sampleRate, channelNum int, bufferSize, periodSize *C.snd_pcm_uframes_t) error {

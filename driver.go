@@ -52,6 +52,10 @@ func (c *Context) NewPlayer(r io.Reader) Player {
 	return c.context.NewPlayer(r)
 }
 
+func (c *Context) Run() error {
+	return c.context.Run()
+}
+
 // Suspend suspends the entire audio play.
 //
 // Suspend is concurrent-safe.

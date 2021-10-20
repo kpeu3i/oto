@@ -159,6 +159,10 @@ func (c *context) appendBuffer(buf32 []float32) {
 	}
 }
 
+func (c *context) Run() error {
+	return nil
+}
+
 func (c *context) Suspend() error {
 	if osstatus := C.AudioQueuePause(c.audioQueue); osstatus != C.noErr {
 		return fmt.Errorf("oto: AudioQueuePause failed: %d", osstatus)

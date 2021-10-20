@@ -42,6 +42,10 @@ func newContext(sampleRate int, channelNum int, bitDepthInBytes int) (*context, 
 	return c, ready, nil
 }
 
+func (c *context) Run() error {
+	return nil
+}
+
 func (c *context) Suspend() error {
 	return oboe.Suspend()
 }
